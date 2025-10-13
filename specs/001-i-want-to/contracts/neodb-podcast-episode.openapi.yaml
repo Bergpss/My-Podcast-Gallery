@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: NeoDB Podcast Episode API (Dependency Contract)
+  version: 1.0.0
+  description: |
+    External dependency used by Personal Podcast Gallery to retrieve podcast metadata.
+    Documented here to capture required fields, headers, and expected failure modes.
+servers:
+  - url: https://neodb.social/api
+paths:
+  /podcast/episode/{uuid}:
+    get:
+      summary: Fetch podcast metadata by NeoDB UUID
+      operationId: getPodcastEpisode
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: NeoDB-assigned UUID for the podcast episode/show entry curated by the site owner.
+        - name: Authorization
+          in: header
+          required: false
+          schema:
+            type: string
+          example: Bearer <token>
+          description: Optional bearer token when accessing authenticated NeoDB instances.
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            enum: [application/json]
+          description: Response format requested by the gallery client (static site fetch).
+      responses:
+        '200':
+          description: Podcast metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - uuid
+                  - title
+                  - description
+                  - cover
+                properties:
+                  uuid:
+                    type: string
+                    description: Stable UUID for this podcast record.
+                  title:
+                    type: string
+                    description: Human-readable title of the podcast.
+                  description:
+                    type: string
+                    description: Episode or show synopsis; may include basic HTML.
+                  cover:
+                    type: string
+                    format: uri
+                    description: URL to cover artwork image.
+                  official_site:
+                    type: string
+                    format: uri
+                    nullable: true
+                    description: External URL for official site or listening destination.
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                    description: Optional taxonomy for categorization.
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: Timestamp of last modification in NeoDB.
+        '404':
+          description: The requested UUID does not exist or is not visible.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded; client should back off before retrying.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error encountered by NeoDB.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+        status:
+          type: integer
+          description: HTTP status code repeated for convenience.
+        detail:
+          type: string
+          nullable: true
+          description: Additional context when available.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - {}
