@@ -4,10 +4,10 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 # Tasks: Personal Podcast Gallery
 
-**Input**: Design documents from `/specs/001-i-want-to/`
+**Input**: Design documents from `/specs/001-i-want-to/`  
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: Accessibility (axe-core), performance (Lighthouse CI), and responsive screenshot checks are required where noted.
+**Tests**: Accessibility (axe-core), performance (Lighthouse CI), responsive screenshots, moderated usability session, and nightly metadata audit logging are required.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -17,17 +17,17 @@ description: "Task list for Personal Podcast Gallery implementation"
 - Include exact file paths in descriptions
 
 ## Path Conventions
-- Static site assets live under `src/` (e.g., `src/index.html`, `src/styles/`, `src/scripts/`, `src/assets/`)
-- Build artifacts output to `dist/` via `npm run build` (or equivalent) and MUST remain static
+- Static site assets live under `src/` (e.g., `src/index.html`, `src/styles/`, `src/scripts/`, `src/assets/`, `src/data/`)
+- Build artifacts output to `dist/` via `npm run build`
 
 ## Phase 1: Setup (Shared Infrastructure)
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 [SETUP] Initialize npm workspace with static-site tooling (`package.json`, npm scripts) at repo root; add dev dependencies `esbuild`, `lighthouse`, `axe-core`, `serve`.
-- [ ] T002 [SETUP] Scaffold source tree (`src/index.html`, `src/styles/`, `src/scripts/`, `src/assets/`, `src/data/`) and create placeholder files.
-- [ ] T003 [SETUP] Add `.env.example` with `NEODB_API_BASE`, `NEODB_API_TOKEN`, `PODCAST_UUIDS`; update `.gitignore` for `.env`.
-- [ ] T004 [P] [SETUP] Create `src/data/podcasts.json` containing curated UUID list template and documentation comments for maintenance.
+- [ ] T001 [SETUP] Initialize npm workspace with static-site tooling (`package.json`, npm scripts) at repo root; install dev dependencies `esbuild`, `lighthouse`, `axe-core`, `puppeteer`, `sharp`.
+- [ ] T002 [SETUP] Scaffold source directories (`src/index.html`, `src/styles/`, `src/scripts/`, `src/assets/`, `src/data/`) and create placeholder files.
+- [ ] T003 [SETUP] Add `.env.example` documenting `NEODB_API_BASE`, `NEODB_API_TOKEN`, `PODCAST_UUIDS`; update `.gitignore` to exclude `.env`.
+- [ ] T004 [P] [SETUP] Seed `src/data/podcasts.json` with curated UUID examples including optional `"sensitive": true` flag and inline maintenance notes.
 
 ---
 
@@ -37,94 +37,103 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [FOUND] Configure `scripts/build.js` (or equivalent) to bundle `src` via esbuild into `dist/`; wire npm scripts `build`, `preview`.
-- [ ] T006 [P] [FOUND] Implement image optimization pipeline (`scripts/prepare-images.js`) using Sharp/imagemin and register `npm run prepare:images`.
-- [ ] T007 [P] [FOUND] Add quality automation: `npm run test:accessibility` (axe-core CLI), `npm run test:lighthouse` (Lighthouse CI config), `npm run test:responsive` (Puppeteer screenshots).
-- [ ] T008 [FOUND] Implement `src/scripts/api.js` with fetch wrapper (timeout, retry-once, error normalization) consuming env-configured base URL/token.
-- [ ] T009 [FOUND] Establish design tokens in `src/styles/theme.css` (color palette, typography scale, spacing, focus styles).
-- [ ] T010 [FOUND] Document build and quality commands in `quickstart.md`, ensuring prerequisites align with constitution mandates.
+- [ ] T005 [FOUND] Configure `scripts/build.js` (or equivalent) to bundle `src/` via esbuild into `dist/` with hashed assets and HTML entry point.
+- [ ] T006 [P] [FOUND] Implement image optimization pipeline (`scripts/prepare-images.js`) using Sharp/imagemin; add npm script `prepare:images`.
+- [ ] T007 [P] [FOUND] Wire quality automation scripts: `npm run test:accessibility`, `npm run test:lighthouse`, `npm run test:responsive`, `npm run usability`, `npm run audit:metadata`.
+- [ ] T008 [FOUND] Implement `src/scripts/api.js` with fetch wrapper (timeout, retry-once, error normalization) using env-configured base URL/token.
+- [ ] T009 [FOUND] Establish design tokens in `src/styles/theme.css` (colors, typography scale, spacing, focus styles, warning badge palette).
+- [ ] T010 [FOUND] Update `specs/001-i-want-to/quickstart.md` with setup commands, quality gates, and manual checklist.
+- [ ] T011 [FOUND] Create documentation skeleton (`docs/evidence/US1/`, `docs/evidence/US2/`, `docs/evidence/US3/`, `docs/maintenance/`) including README placeholders.
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: Foundation ready – user story implementation can begin
 
 ---
 
-## Phase 3: User Story 1 - Browse my podcast gallery (Priority: P1) 🎯 MVP
+## Phase 3: User Story 1 – Browse my podcast gallery (Priority: P1) 🎯
 
-**Goal**: Visitors immediately see curated podcasts with cover art, title, description, and action.
+**Goal**: Visitors immediately see curated podcasts with cover art, title, description, action, and sensitive imagery protections.
 
-**Independent Test**: Load gallery with curated UUIDs; verify every card renders required fields with live NeoDB data or resilient error messaging.
+**Independent Test**: Load gallery with curated UUIDs; verify each card renders required fields, sensitive covers blur with warning, and loading/error states remain stable.
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T011 [US1] Run `npm run build` BEFORE implementation to observe expected failures/missing content and confirm tooling hooks are wired.
-- [ ] T012 [US1] Execute `npm run test:accessibility` pre-implementation to capture failing baseline screenshots/logs.
-- [ ] T013 [US1] Execute `npm run test:lighthouse` (mobile + desktop) pre-implementation to establish baseline metrics and identify gaps.
+- [ ] T012 [US1] Run `npm run build` BEFORE implementation to confirm static pipeline executes and highlights missing gallery output.
+- [ ] T013 [US1] Execute `npm run test:accessibility` before implementation to capture failing baseline logs.
+- [ ] T014 [US1] Execute `npm run test:lighthouse` (mobile + desktop) before implementation to capture baseline metrics.
 
 ### Implementation for User Story 1
 
-- [ ] T014 [US1] Author semantic layout in `src/index.html` (header, main gallery section, status region, footer) with placeholders for cards and status messages.
-- [ ] T015 [P] [US1] Implement mobile-first gallery styles in `src/styles/gallery.css` leveraging theme tokens and ensuring card visuals align with modern aesthetic.
-- [ ] T016 [P] [US1] Create `src/scripts/gallery.js` to hydrate podcasts: ingest `PODCAST_UUIDS`, request metadata via `api.js`, map to Podcast entity, and render cards.
-- [ ] T017 [P] [US1] Implement `src/scripts/ui-state.js` to manage `GalleryUIState` (loading, ready, error, empty) and integrate with status message component.
-- [ ] T018 [US1] Add accessible behaviors: alt text, keyboard focus order, skip link, external link semantics in `src/index.html` and `src/scripts/gallery.js`.
-- [ ] T019 [US1] Provide default assets (e.g., `src/assets/placeholder-cover.svg`) and update rendering logic for missing covers/descriptions.
-- [ ] T020 [US1] Re-run `npm run build` confirming gallery renders successfully with implemented components.
-- [ ] T021 [US1] Re-run `npm run test:accessibility` ensuring axe-core passes with zero critical issues; archive report.
-- [ ] T022 [US1] Re-run `npm run test:lighthouse` confirming scores >=90 for Performance/Best Practices; store artifacts.
-- [ ] T023 [US1] Update documentation (`docs/evidence/US1/notes.md`) confirming acceptance scenarios and linking to reports.
-- [ ] T024 [US1] Run moderated usability session with three representative listeners to validate the 5-second recognition metric; capture recordings and raw notes.
-- [ ] T025 [US1] Summarize usability findings and archive evidence in `docs/evidence/US1/usability.md`, highlighting outcomes against SC-001.
+- [ ] T015 [US1] Author semantic layout in `src/index.html` (header, skip link, main gallery region, status area, footer).
+- [ ] T016 [P] [US1] Implement gallery styling in `src/styles/gallery.css` with mobile-first layout and focus-visible treatments.
+- [ ] T017 [P] [US1] Build `src/scripts/gallery.js` to hydrate podcasts from `PODCAST_UUIDS`, request metadata via `api.js`, and render cards.
+- [ ] T018 [P] [US1] Create `src/scripts/ui-state.js` managing `GalleryUIState` transitions (loading, ready, empty, error) and wiring status messages.
+- [ ] T019 [US1] Add accessibility behaviors (alt text, keyboard focus order, external link semantics, reduced-motion respect) across `index.html` and `gallery.js`.
+- [ ] T020 [US1] Implement sensitive cover handling: blur overlay, warning badge CSS, reveal control, using `sensitive` flags and `src/assets/placeholder-cover.svg`.
+- [ ] T021 [US1] Update `docs/maintenance/podcast-refresh.md` with instructions for managing `PODCAST_UUIDS` and `sensitive` flags.
 
-**Checkpoint**: User Story 1 functional, accessible, and performance-audited independently
+### Verification for User Story 1
+
+- [ ] T022 [US1] Re-run `npm run build` verifying gallery renders with populated data and sensitive overlays.
+- [ ] T023 [US1] Re-run `npm run test:accessibility` ensuring zero critical issues; archive report in `docs/evidence/US1/`.
+- [ ] T024 [US1] Re-run `npm run test:lighthouse` confirming scores >=90 (Performance/Best Practices); store reports in `docs/evidence/US1/`.
+- [ ] T025 [US1] Execute `npm run usability` with three participants capturing 5-second recognition results (raw notes in `docs/evidence/US1/`).
+- [ ] T026 [US1] Summarize usability findings and acceptance evidence in `docs/evidence/US1/usability.md`.
+
+**Checkpoint**: User Story 1 functional, accessible, and evidenced independently
 
 ---
 
-## Phase 4: User Story 2 - Enjoy the gallery on any device (Priority: P2)
+## Phase 4: User Story 2 – Enjoy the gallery on any device (Priority: P2)
 
-**Goal**: Gallery feels polished on phone, tablet, and desktop with responsive layouts.
+**Goal**: Gallery remains polished and readable across phone, tablet, desktop, and extreme viewport sizes.
 
-**Independent Test**: Verify designs at <=360 px, 768 px, >=1200 px widths with consistent legibility and interaction affordances.
+**Independent Test**: Verify layouts at 300 px, <=360 px, 768 px, >=1200 px, >=1800 px with consistent legibility and interaction affordances.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T026 [US2] Run `npm run test:responsive` to capture mobile/tablet/desktop viewport screenshots; store in `docs/evidence/US2/`.
-- [ ] T027 [US2] Validate manual checklist for touch/keyboard interactions across breakpoints; record findings in `docs/evidence/US2/responsive-review.md`.
-- [ ] T028 [P] [US2] Capture additional screenshots at 300 px and 1800 px widths to verify extreme viewport handling; archive in `docs/evidence/US2/extreme-breakpoints/`.
+- [ ] T027 [US2] Run `npm run test:responsive` BEFORE adjustments to capture baseline failure output for comparison.
+- [ ] T028 [US2] Prepare responsive review template `docs/evidence/US2/responsive-review.md` outlining checklist items per breakpoint.
 
 ### Implementation for User Story 2
 
-- [ ] T029 [US2] Extend `src/styles/theme.css` with responsive typography and spacing scales for breakpoint transitions.
-- [ ] T030 [P] [US2] Enhance `src/styles/gallery.css` with grid/flex layouts supporting stacked mobile cards, two-column tablet, multi-column desktop.
-- [ ] T031 [P] [US2] Update `src/index.html` (if needed) with viewport previews (e.g., data attributes) to support adaptive styling hooks.
-- [ ] T032 [US2] Implement JavaScript hook (optional) in `src/scripts/ui-state.js` to track `breakpoint` enum and adjust visible podcast count or layout toggles.
-- [ ] T033 [US2] Re-run `npm run test:lighthouse` focusing on mobile profile; ensure CSS changes keep performance >=90 and document in evidence file.
+- [ ] T029 [US2] Extend `src/styles/theme.css` with responsive typography, spacing scales, and breakpoint tokens (mobile/tablet/desktop/ultra).
+- [ ] T030 [P] [US2] Enhance `src/styles/gallery.css` to support stacked mobile, two-column tablet, multi-column desktop, and ultra-wide layouts (300 & 1800 px support).
+- [ ] T031 [P] [US2] Update `src/index.html` container structure/data attributes to facilitate responsive hooks and viewport previews.
+- [ ] T032 [US2] Update `src/scripts/ui-state.js` to derive and expose current breakpoint enum (mobile/tablet/desktop/ultra) for future adaptive behaviors.
 
-**Checkpoint**: User Story 2 delivers responsive gallery validated across required breakpoints
+### Verification for User Story 2
+
+- [ ] T033 [US2] Re-run `npm run test:responsive` capturing screenshots at 300, 360, 768, 1200, and 1800 px; store assets in `docs/evidence/US2/`.
+- [ ] T034 [US2] Complete manual responsive checklist, documenting results in `docs/evidence/US2/responsive-review.md`.
+- [ ] T035 [US2] Re-run `npm run test:lighthouse` (mobile focus) confirming performance >=90 despite responsive enhancements; archive reports in `docs/evidence/US2/`.
+
+**Checkpoint**: User Story 2 validated across required breakpoints with documented evidence
 
 ---
 
-## Phase 5: User Story 3 - Keep podcast details accurate (Priority: P3)
+## Phase 5: User Story 3 – Keep podcast details accurate (Priority: P3)
 
-**Goal**: Metadata stays current with NeoDB via caching, refresh controls, and graceful fallbacks.
+**Goal**: Metadata stays current via caching, manual refresh, nightly audit logging, and resilient error handling.
 
-**Independent Test**: Trigger sync cycle, confirm updates appear without redeploy, simulate API failures to ensure graceful recovery.
-
-### Tests for User Story 3 ⚠️
-
-- [ ] T034 [US3] Simulate NeoDB failure (mock) and capture screenshots/logs showing resilient messaging; store in `docs/evidence/US3/`.
-- [ ] T035 [US3] Verify cache refresh by updating sample podcast metadata and documenting observed change within UI without redeploy.
+**Independent Test**: Trigger refresh cycle, confirm updated content without redeploy, simulate API failures, and capture nightly audit log demonstrating freshness compliance.
 
 ### Implementation for User Story 3
 
-- [ ] T036 [US3] Add caching module `src/scripts/cache.js` managing `localStorage` entries keyed by UUID with `last_synced_at` validation.
-- [ ] T037 [P] [US3] Enhance `src/scripts/api.js` to leverage cache module, respect rate limits, and expose manual refresh hook.
-- [ ] T038 [P] [US3] Implement refresh control UI (button) in `src/index.html` with handler in `src/scripts/gallery.js`, including aria-label and disabled states.
-- [ ] T039 [US3] Expand status messaging system to surface specific errors (404, 429, 500) using templates in `src/scripts/ui-state.js`.
-- [ ] T040 [US3] Document curator workflow for updating UUID list and interpreting error logs in `docs/maintenance/podcast-refresh.md`.
-- [ ] T041 [US3] Implement `scripts/audit-metadata.js` to log nightly NeoDB sync status/timestamps and persist results for the 30-day freshness target.
-- [ ] T042 [US3] Document rolling metadata audit process in `docs/maintenance/metadata-audit.md`, including a 7-day sample log template and scheduling guidance.
+- [ ] T036 [US3] Create `src/scripts/cache.js` managing `localStorage` entries per UUID with `last_synced_at` validation and expiry logic.
+- [ ] T037 [P] [US3] Enhance `src/scripts/api.js` to integrate cache layer, respect NeoDB rate limits, and expose manual refresh hooks.
+- [ ] T038 [P] [US3] Implement refresh control UI (button) in `src/index.html` with handler in `src/scripts/gallery.js`, including aria-labels and disabled states during fetch.
+- [ ] T039 [US3] Expand `src/scripts/ui-state.js` / status messaging to differentiate 404, 429, 500 errors with tailored guidance.
+- [ ] T040 [US3] Implement `scripts/audit-metadata.js` logging nightly NeoDB fetch status (`MetadataAuditEntry`) to `docs/maintenance/logs/`.
+- [ ] T041 [US3] Update `docs/maintenance/metadata-audit.md` with 7-day sample log template, scheduling guidance, and success criteria for SC-004.
+- [ ] T042 [US3] Augment `docs/maintenance/podcast-refresh.md` with manual refresh workflow, cache reset steps, and troubleshooting guidance.
 
-**Checkpoint**: User Story 3 ensures data freshness and resilient handling of NeoDB availability
+### Verification for User Story 3
+
+- [ ] T043 [US3] Simulate NeoDB failure (e.g., mock 500) and capture screenshots/logs showing resilient messaging in `docs/evidence/US3/`.
+- [ ] T044 [US3] Verify cache refresh by modifying sample metadata, reloading, and documenting change observation in `docs/evidence/US3/cache-refresh.md`.
+- [ ] T045 [US3] Execute `npm run audit:metadata` capturing log output and verifying success within 24h window; archive sample in `docs/evidence/US3/metadata-audit.log`.
+
+**Checkpoint**: User Story 3 ensures data freshness and resiliency with audit evidence
 
 ---
 
@@ -132,10 +141,10 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T043 [P] Document final evidence bundle in `docs/evidence/summary.md` (accessibility, performance, responsive, resiliency).
-- [ ] T044 [P] Perform code cleanup and ensure ESLint/stylelint (if configured) pass; remove unused assets.
-- [ ] T045 [P] Final `npm run build` and smoke test served output via `npm run preview`; capture final approval notes.
-- [ ] T046 Publish deployment guide snippet in `docs/deployment.md` outlining static host steps and environment variable expectations.
+- [ ] T046 [P] Document final evidence bundle in `docs/evidence/summary.md` (accessibility, performance, responsive, usability, metadata).
+- [ ] T047 [P] Perform code cleanup, run linting/formatting (stylelint/eslint if configured), and remove unused assets.
+- [ ] T048 [P] Execute final `npm run build` and `npm run preview` smoke test; capture approval notes in `docs/evidence/summary.md`.
+- [ ] T049 Publish deployment guide snippet in `docs/deployment.md` outlining static hosting steps, environment variables, and audit scheduling reminders.
 
 ---
 
@@ -143,36 +152,32 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 ### Phase Dependencies
 
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 -> P2 -> P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+- **Setup (Phase 1)**: No dependencies – begin immediately.
+- **Foundational (Phase 2)**: Depends on Setup completion – BLOCKS all user stories.
+- **User Stories (Phase 3+)**: Depend on Foundational phase; proceed sequentially (P1 -> P2 -> P3) or parallel if staffing allows once prerequisites satisfied.
+- **Polish (Final Phase)**: Depends on completion of desired user stories.
 
 ### User Story Dependencies
 
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after User Story 1 ensures base markup/api ready
-- **User Story 3 (P3)**: Depends on User Story 1 data rendering; runs parallel with US2 once API hooks exist
+- **User Story 1 (P1)**: Requires foundational tooling and documentation – no other story dependency.
+- **User Story 2 (P2)**: Builds on US1 markup and styling foundation.
+- **User Story 3 (P3)**: Depends on US1 data rendering; can proceed in parallel with US2 after API and layout established.
 
 ### Within Each User Story
 
-- Automated accessibility/performance scripts MUST be prepared and observed failing before implementation work begins.
-- Static markup updates in `src/index.html` precede styling changes in `src/styles/`.
-- Styling updates precede JavaScript enhancements in `src/scripts/`.
-- Responsive screenshots and audit evidence are captured before marking the story complete.
+- Automated checks (`build`, `test:accessibility`, `test:lighthouse`, `test:responsive`, `usability`, `audit:metadata`) must be prepared and observed failing before implementation, then rerun for passing evidence.
+- HTML updates precede CSS modifications; CSS updates precede JavaScript enhancements touching the same component.
+- Evidence artifacts (reports, screenshots, logs, summaries) must be archived before closing the story.
+
+---
 
 ## Parallel Example: User Story 1
 
 ```bash
-# Launch compliance checks for User Story 1 (if requested):
-Task: "npm run test:accessibility -- dist/index.html"
-Task: "npm run test:lighthouse -- dist/index.html"
-
-# Parallel file updates for User Story 1:
-Task: "Update gallery markup in src/index.html"
-Task: "Refine gallery styling in src/styles/gallery.css"
+# Parallel tasks once layout scaffolded
+Task: "Implement gallery styling in src/styles/gallery.css"
+Task: "Build src/scripts/gallery.js"
+Task: "Create src/scripts/ui-state.js"
 ```
 
 ---
@@ -180,40 +185,31 @@ Task: "Refine gallery styling in src/styles/gallery.css"
 ## Implementation Strategy
 
 ### MVP First (User Story 1 Only)
-
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Run build, accessibility, performance audits for US1
-5. Deploy/demo if ready
+1. Complete Phase 1: Setup  
+2. Complete Phase 2: Foundational  
+3. Deliver Phase 3: User Story 1  
+4. **STOP and VALIDATE**: Accessibility, performance, usability evidence recorded  
+5. Deploy/demo MVP
 
 ### Incremental Delivery
-
-1. Complete Setup + Foundational -> Foundation ready
-2. Add User Story 1 -> Test independently -> Deploy/Demo (MVP!)
-3. Add User Story 2 -> Test independently -> Deploy/Demo
-4. Add User Story 3 -> Test independently -> Deploy/Demo
-5. Each story adds value without breaking previous stories
+1. Complete Setup + Foundational  
+2. Add User Story 1 → Validate → Deploy/Demo  
+3. Add User Story 2 → Validate → Deploy/Demo  
+4. Add User Story 3 → Validate → Deploy/Demo  
+5. Each increment remains independently testable and evidenced
 
 ### Parallel Team Strategy
-
-With multiple developers:
-
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+1. Team completes Setup + Foundational together  
+2. Parallel efforts after Phase 2:  
+   - Developer A: User Story 1  
+   - Developer B: User Story 2  
+   - Developer C: User Story 3  
+3. Polish phase consolidates shared improvements and deployment
 
 ---
 
 ## Notes
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing where specified
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+- [P] tasks operate on distinct files/directories and can proceed concurrently.
+- Maintain constitution evidence requirements (screenshots, reports, logs) for every PR.
+- Keep `src/data/podcasts.json` as the single curator-managed source for UUIDs and sensitive flags.
