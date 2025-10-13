@@ -67,16 +67,16 @@ As the gallery curator, I want the site to pull live data from NeoDB so the cove
 ## Edge Cases
 
 - NeoDB request times out, fails authentication, or returns incomplete metadata for one or more podcasts.
-- A podcast cover image is missing, uses an unexpected aspect ratio, or contains sensitive imagery.
+- A podcast cover image is missing, uses an unexpected aspect ratio, or contains sensitive imagery requiring a default blur overlay and warning badge before reveal.
 - The curated list temporarily becomes empty (all podcasts removed or filtered) and the gallery must communicate the state.
-- Devices narrower than 320 px or ultra-wide monitors above 1600 px display the gallery; typography and layout must remain legible.
+- Devices narrower than 320 px or ultra-wide monitors above 1600 px display the gallery; typography and layout must remain legible, with validation evidence captured at 300 px and 1800 px widths.
 - Visitor revisits the site shortly after a NeoDB update; cached content should refresh without confusing flicker or stale details.
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-- **FR-001**: The gallery MUST display each selected podcast with its cover image, title, concise description, and a clear action leading to an external listening destination.
+- **FR-001**: The gallery MUST display each selected podcast with its cover image, title, concise description, and a clear action leading to an external listening destination, applying a blur overlay and warning badge to any curator-flagged sensitive cover art before reveal.
 - **FR-002**: Podcast data MUST be retrieved from NeoDB using the maintained UUID list; the experience must not rely on manually duplicated metadata.
 - **FR-003**: The gallery layout MUST remain usable at <=360 px, 768 px, and >=1200 px widths, preserving readable typography, spacing, and interaction targets.
 - **FR-004**: The experience MUST uphold accessibility fundamentals, including descriptive alt text, logical heading structure, keyboard navigation, and visible focus states.
@@ -93,8 +93,8 @@ As the gallery curator, I want the site to pull live data from NeoDB so the cove
 
 ### Measurable Outcomes
 
-- **SC-001**: In moderated usability checks, 100% of participants can identify at least one podcast they recognize within 5 seconds on first load.
+- **SC-001**: Moderated usability sessions with at least three representative listeners confirm 100% of participants identify a familiar podcast within 5 seconds on first load, with observations logged in `docs/evidence/US1/usability.md`.
 - **SC-002**: Design reviews across <=360 px, 768 px, and >=1200 px viewports report no readability or interaction issues, confirmed by responsive audit sign-off.
 - **SC-003**: Independent accessibility evaluation documents zero critical or serious issues and fewer than three minor findings for the gallery experience.
-- **SC-004**: Spot audits over a rolling 30-day period show 95% of podcast cards match the latest NeoDB titles and descriptions within 24 hours of NeoDB updates.
+- **SC-004**: Nightly metadata audits over a rolling 30-day window log that 95% of podcast cards match the latest NeoDB titles and descriptions within 24 hours, with evidence stored in `docs/maintenance/metadata-audit.md`.
 - **SC-005**: Performance reviews confirm the gallery becomes visibly usable within 2 seconds on standard broadband connections for 90% of test sessions.

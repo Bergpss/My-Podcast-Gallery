@@ -72,6 +72,8 @@ description: "Task list for Personal Podcast Gallery implementation"
 - [ ] T021 [US1] Re-run `npm run test:accessibility` ensuring axe-core passes with zero critical issues; archive report.
 - [ ] T022 [US1] Re-run `npm run test:lighthouse` confirming scores >=90 for Performance/Best Practices; store artifacts.
 - [ ] T023 [US1] Update documentation (`docs/evidence/US1/notes.md`) confirming acceptance scenarios and linking to reports.
+- [ ] T024 [US1] Run moderated usability session with three representative listeners to validate the 5-second recognition metric; capture recordings and raw notes.
+- [ ] T025 [US1] Summarize usability findings and archive evidence in `docs/evidence/US1/usability.md`, highlighting outcomes against SC-001.
 
 **Checkpoint**: User Story 1 functional, accessible, and performance-audited independently
 
@@ -85,16 +87,17 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T024 [US2] Run `npm run test:responsive` to capture mobile/tablet/desktop viewport screenshots; store in `docs/evidence/US2/`.
-- [ ] T025 [US2] Validate manual checklist for touch/keyboard interactions across breakpoints; record findings in `docs/evidence/US2/responsive-review.md`.
+- [ ] T026 [US2] Run `npm run test:responsive` to capture mobile/tablet/desktop viewport screenshots; store in `docs/evidence/US2/`.
+- [ ] T027 [US2] Validate manual checklist for touch/keyboard interactions across breakpoints; record findings in `docs/evidence/US2/responsive-review.md`.
+- [ ] T028 [P] [US2] Capture additional screenshots at 300 px and 1800 px widths to verify extreme viewport handling; archive in `docs/evidence/US2/extreme-breakpoints/`.
 
 ### Implementation for User Story 2
 
-- [ ] T026 [US2] Extend `src/styles/theme.css` with responsive typography and spacing scales for breakpoint transitions.
-- [ ] T027 [P] [US2] Enhance `src/styles/gallery.css` with grid/flex layouts supporting stacked mobile cards, two-column tablet, multi-column desktop.
-- [ ] T028 [P] [US2] Update `src/index.html` (if needed) with viewport previews (e.g., data attributes) to support adaptive styling hooks.
-- [ ] T029 [US2] Implement JavaScript hook (optional) in `src/scripts/ui-state.js` to track `breakpoint` enum and adjust visible podcast count or layout toggles.
-- [ ] T030 [US2] Re-run `npm run test:lighthouse` focusing on mobile profile; ensure CSS changes keep performance >=90 and document in evidence file.
+- [ ] T029 [US2] Extend `src/styles/theme.css` with responsive typography and spacing scales for breakpoint transitions.
+- [ ] T030 [P] [US2] Enhance `src/styles/gallery.css` with grid/flex layouts supporting stacked mobile cards, two-column tablet, multi-column desktop.
+- [ ] T031 [P] [US2] Update `src/index.html` (if needed) with viewport previews (e.g., data attributes) to support adaptive styling hooks.
+- [ ] T032 [US2] Implement JavaScript hook (optional) in `src/scripts/ui-state.js` to track `breakpoint` enum and adjust visible podcast count or layout toggles.
+- [ ] T033 [US2] Re-run `npm run test:lighthouse` focusing on mobile profile; ensure CSS changes keep performance >=90 and document in evidence file.
 
 **Checkpoint**: User Story 2 delivers responsive gallery validated across required breakpoints
 
@@ -108,16 +111,18 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T031 [US3] Simulate NeoDB failure (mock) and capture screenshots/logs showing resilient messaging; store in `docs/evidence/US3/`.
-- [ ] T032 [US3] Verify cache refresh by updating sample podcast metadata and documenting observed change within UI without redeploy.
+- [ ] T034 [US3] Simulate NeoDB failure (mock) and capture screenshots/logs showing resilient messaging; store in `docs/evidence/US3/`.
+- [ ] T035 [US3] Verify cache refresh by updating sample podcast metadata and documenting observed change within UI without redeploy.
 
 ### Implementation for User Story 3
 
-- [ ] T033 [US3] Add caching module `src/scripts/cache.js` managing `localStorage` entries keyed by UUID with `last_synced_at` validation.
-- [ ] T034 [P] [US3] Enhance `src/scripts/api.js` to leverage cache module, respect rate limits, and expose manual refresh hook.
-- [ ] T035 [P] [US3] Implement refresh control UI (button) in `src/index.html` with handler in `src/scripts/gallery.js`, including aria-label and disabled states.
-- [ ] T036 [US3] Expand status messaging system to surface specific errors (404, 429, 500) using templates in `src/scripts/ui-state.js`.
-- [ ] T037 [US3] Document curator workflow for updating UUID list and interpreting error logs in `docs/maintenance/podcast-refresh.md`.
+- [ ] T036 [US3] Add caching module `src/scripts/cache.js` managing `localStorage` entries keyed by UUID with `last_synced_at` validation.
+- [ ] T037 [P] [US3] Enhance `src/scripts/api.js` to leverage cache module, respect rate limits, and expose manual refresh hook.
+- [ ] T038 [P] [US3] Implement refresh control UI (button) in `src/index.html` with handler in `src/scripts/gallery.js`, including aria-label and disabled states.
+- [ ] T039 [US3] Expand status messaging system to surface specific errors (404, 429, 500) using templates in `src/scripts/ui-state.js`.
+- [ ] T040 [US3] Document curator workflow for updating UUID list and interpreting error logs in `docs/maintenance/podcast-refresh.md`.
+- [ ] T041 [US3] Implement `scripts/audit-metadata.js` to log nightly NeoDB sync status/timestamps and persist results for the 30-day freshness target.
+- [ ] T042 [US3] Document rolling metadata audit process in `docs/maintenance/metadata-audit.md`, including a 7-day sample log template and scheduling guidance.
 
 **Checkpoint**: User Story 3 ensures data freshness and resilient handling of NeoDB availability
 
@@ -127,10 +132,10 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T038 [P] Document final evidence bundle in `docs/evidence/summary.md` (accessibility, performance, responsive, resiliency).
-- [ ] T039 [P] Perform code cleanup and ensure ESLint/stylelint (if configured) pass; remove unused assets.
-- [ ] T040 [P] Final `npm run build` and smoke test served output via `npm run preview`; capture final approval notes.
-- [ ] T041 Publish deployment guide snippet in `docs/deployment.md` outlining static host steps and environment variable expectations.
+- [ ] T043 [P] Document final evidence bundle in `docs/evidence/summary.md` (accessibility, performance, responsive, resiliency).
+- [ ] T044 [P] Perform code cleanup and ensure ESLint/stylelint (if configured) pass; remove unused assets.
+- [ ] T045 [P] Final `npm run build` and smoke test served output via `npm run preview`; capture final approval notes.
+- [ ] T046 Publish deployment guide snippet in `docs/deployment.md` outlining static host steps and environment variable expectations.
 
 ---
 

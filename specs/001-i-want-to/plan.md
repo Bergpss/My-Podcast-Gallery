@@ -32,7 +32,7 @@ Curate a personal podcast gallery that fetches metadata from NeoDB using a maint
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
 - **Framework-Free Static Delivery**: Author everything in vanilla HTML/CSS/JS with optional build step (esbuild) that outputs static `/dist`; no runtime frameworks or server rendering.
-- **Responsive Layout Fidelity**: Implement mobile-first CSS covering <=360 px, 768 px, >=1200 px, validated via manual responsive review and automated viewport snapshots.
+- **Responsive Layout Fidelity**: Implement mobile-first CSS covering 300 px, <=360 px, 768 px, >=1200 px, and >=1800 px viewports, validated via manual responsive review and automated viewport snapshots.
 - **NeoDB Data Authority**: Centralize fetch logic in `src/scripts/api.js`, pulling metadata from `https://neodb.social/api/podcast/episode/{uuid}` with UUID list stored in configuration; handle fail/empty states gracefully.
 - **Accessible Modern Presentation**: Follow WCAG 2.1 AA with semantic landmarks, keyboard navigation, high-contrast theme tokens, and automated axe-core scans to detect regressions.
 - **Performance Budget Discipline**: Enforce <200 KB gzipped budget via build reports, lazy-load images, prefer AVIF/WebP, and run Lighthouse CI targeting >=90 Performance/Best Practices before merge.
@@ -121,6 +121,8 @@ dist/                   # build output (static files only)
 ## Phase 2: Implementation Preparation (Preview)
 
 - Outline coding tasks (deferred to `/speckit.tasks`) covering HTML scaffolding, CSS theme tokens, API module, caching/loading states, and evidence capture pipeline.
+- Define moderated usability testing playbook: recruit three participants, prepare 5-second recognition script, and list evidence artifacts for SC-001.
+- Outline lightweight nightly metadata audit workflow (script or manual log) that records NeoDB sync timestamps for 30 consecutive days.
 - Identify verification evidence to attach in PRs (responsive screenshots, Lighthouse report JSON, axe audit log).
 
 ## Risks & Mitigations
@@ -128,6 +130,7 @@ dist/                   # build output (static files only)
 - **NeoDB Rate Limits or Downtime**: Implement polite request pacing and cache results in `localStorage`; provide clear offline messaging.  
 - **Image Weight Overages**: Pre-process cover art via build step or request lower-resolution variants if available; enforce lint step to flag large assets.  
 - **Accessibility Regression**: Integrate axe-core into CI and maintain manual checklist for keyboard navigation, focus order, and color contrast.
+- **Sensitive Imagery Exposure**: Provide curator-managed flagging with default blur overlay and warning badge to prevent unexpected display of sensitive cover art.
 
 ## Constitution Re-Check (Post-Design)
 
