@@ -45,6 +45,25 @@
   - Single Lighthouse run — rejected because mobile and desktop can diverge.  
   - Other performance tools (PageSpeed Insights API) — rejected due to more complex automation for a static repo.
 
+## User Evidence & Moderation
+- **Decision**: Conduct a lean moderated usability session with three representative listeners, capturing 5-second recognition metrics and qualitative notes.  
+  **Rationale**: Meets SC-001 requirement without overburdening resources; three participants provide qualitative confirmation for a personal gallery.  
+  **Alternatives considered**:  
+  - Larger formal study — rejected as disproportionate for personal project scope.  
+  - Unmoderated remote test — rejected due to difficulty measuring 5-second recognition reliably.
+
+- **Decision**: Store a curator-managed `sensitive` boolean alongside each UUID in `src/data/podcasts.json` to drive blur overlays.  
+  **Rationale**: Keeps sensitive content control simple, versioned, and co-located with the curated list; avoids additional config files.  
+  **Alternatives considered**:  
+  - Separate sensitive list — rejected to prevent divergence between sources.  
+  - Runtime toggles stored in localStorage — rejected because they are not shareable across deployments.
+
+- **Decision**: Implement a nightly metadata audit script (`scripts/audit-metadata.js`) that logs refresh status, delta detection, and timestamps to support SC-004.  
+  **Rationale**: Automates freshness validation and produces evidence without manual logging; script can run locally or via scheduled job.  
+  **Alternatives considered**:  
+  - Manual weekly spot checks — rejected because they cannot guarantee 95% within 24 hours.  
+  - Full backend service — rejected as unnecessary for static hosting context.
+
 ## Risk Mitigation Notes
 - Respect NeoDB rate limits by debouncing fetches and caching responses in `localStorage` for the session (with explicit manual refresh control).  
 - Provide placeholder imagery and short copy truncation when metadata is missing, preventing layout collapse.  

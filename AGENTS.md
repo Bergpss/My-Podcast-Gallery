@@ -4,6 +4,8 @@ Auto-generated from all feature plans. Last updated: 2025-10-13
 
 ## Active Technologies
 - HTML5, CSS3, JavaScript (ES2023) + none (vanilla stack mandated) (001-i-want-to)
+- HTML5, CSS3, JavaScript (ES2023) + none (vanilla stack mandated), build tooling via esbuild, Sharp/imagemin for assets (001-i-want-to)
+- N/A runtime (static site); localStorage used for in-browser caching only (001-i-want-to)
 
 ## Project Structure
 ```
@@ -29,6 +31,7 @@ npm run preview
 HTML5, CSS3, JavaScript (ES2023): Follow standard conventions
 
 ## Recent Changes
+- 001-i-want-to: Added HTML5, CSS3, JavaScript (ES2023) + none (vanilla stack mandated), build tooling via esbuild, Sharp/imagemin for assets
 - 001-i-want-to: Added HTML5, CSS3, JavaScript (ES2023) + none (vanilla stack mandated)
 
 <!-- MANUAL ADDITIONS START -->
