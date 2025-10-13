@@ -134,7 +134,15 @@ export async function fetchPodcast(uuid, options = {}) {
   if (!uuid) {
     throw new ApiError('UUID is required to fetch podcast metadata.');
   }
-  return request(`podcast/episode/${encodeURIComponent(uuid)}`, { ...options, method: 'GET' });
+  const encoded = encodeURIComponent(uuid);
+  try {
+    return await request(`podcast/${encoded}`, { ...options, method: 'GET' });
+  } catch (error) {
+    if (error.status === 404) {
+      return request(`podcast/episode/${encoded}`, { ...options, method: 'GET' });
+    }
+    throw error;
+  }
 }
 
 export async function fetchPodcasts(uuids, options = {}) {

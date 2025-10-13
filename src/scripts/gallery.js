@@ -60,8 +60,9 @@ function createCardElement(template, podcast, metadata) {
   card.dataset.sensitive = String(Boolean(podcast.sensitive));
   card.dataset.sensitiveVisible = podcast.sensitive ? 'false' : 'true';
 
+  const coverUrl = metadata.cover_image_url ?? metadata.cover ?? metadata.image ?? PLACEHOLDER_IMAGE;
   const image = fragment.querySelector('.podcast-card__image');
-  image.src = metadata.cover ?? PLACEHOLDER_IMAGE;
+  image.src = coverUrl;
   image.alt = metadata.title ? `${metadata.title} cover art` : 'Podcast cover art';
   image.decoding = 'async';
 
@@ -77,8 +78,8 @@ function createCardElement(template, podcast, metadata) {
   if (metadata.official_site) {
     link.href = metadata.official_site;
     link.textContent = 'Visit official site';
-  } else if (metadata.cover) {
-    link.href = metadata.cover;
+  } else if (coverUrl && coverUrl !== PLACEHOLDER_IMAGE) {
+    link.href = coverUrl;
     link.textContent = 'View cover image';
   } else {
     link.remove();
