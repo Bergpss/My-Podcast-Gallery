@@ -1,50 +1,82 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+Version change: N/A -> 1.0.0
+Modified principles:
+- Added I. Framework-Free Static Delivery
+- Added II. Responsive Layout Fidelity
+- Added III. NeoDB Data Authority
+- Added IV. Accessible Modern Presentation
+- Added V. Performance Budget Discipline
+Added sections:
+- Implementation Standards
+- Delivery Workflow
+Removed sections: None
+Templates requiring updates:
+- ✅ .specify/templates/plan-template.md
+- ✅ .specify/templates/spec-template.md
+- ✅ .specify/templates/tasks-template.md
+Follow-up TODOs: none
+-->
+
+# My Podcast Gallery Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Framework-Free Static Delivery
+- The site MUST be authored with vanilla HTML, CSS, and JavaScript; client-side frameworks or component libraries that inject runtime dependencies are prohibited.
+- Build tooling MAY bundle or minify assets but MUST output static files deployable through any static host without server execution.
+- The repository MUST exclude backend runtimes; all dynamic data is retrieved via browser requests against public APIs.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+*Rationale: Guarantees a lightweight deploy-anywhere gallery aligned with the static-site mandate.*
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Responsive Layout Fidelity
+- Layouts MUST follow a mobile-first approach with confirmed breakpoints for <=360 px, ~768 px, and >=1200 px widths, maintaining readability without horizontal scrolling.
+- Components MUST leverage CSS Grid or Flexbox with fluid typography and spacing; fixed pixel widths that break responsiveness are not allowed.
+- Interactive elements MUST remain operable via touch, keyboard, and pointer inputs across supported viewport sizes.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+*Rationale: Delivers a consistent, device-agnostic experience for podcast discovery.*
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. NeoDB Data Authority
+- Podcast metadata MUST be fetched from the NeoDB API using the supplied NeoDB UUID; duplicating data in source files beyond type definitions is forbidden.
+- The client MUST handle API latency or failure with resilient loading and error states that preserve layout integrity.
+- API access MUST honor NeoDB rate limits and rely on environment-configured base URLs or tokens without hardcoding secrets.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+*Rationale: Preserves a single source of truth for content accuracy and maintainability.*
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Accessible Modern Presentation
+- Visual styling MUST meet WCAG 2.1 AA contrast ratios, with semantic HTML structure and ARIA attributes only when necessary for assistive clarity.
+- All media assets MUST provide meaningful alt text or explicit decorative markers; non-text content requires accessible fallbacks.
+- Focus states, reduced-motion preferences, and color scheme choices MUST be respected throughout the design system.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+*Rationale: Marries contemporary aesthetics with inclusive access for every listener.*
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Performance Budget Discipline
+- Combined initial HTML, CSS, and JavaScript payload MUST stay under 200 KB gzipped; imagery MUST be optimized (WebP/AVIF preferred) and lazy-loaded when offscreen.
+- Typography MUST default to system font stacks or locally hosted subsets; third-party scripts demand documented approval tied to user value.
+- Each release MUST capture automated Lighthouse (or equivalent) audits targeting scores >=90 for Performance and Best Practices.
+
+*Rationale: Maintains fast first paint and smooth browsing on constrained networks.*
+
+## Implementation Standards
+
+- Project structure MUST remain within a single `src/` directory containing `index.html`, `styles/`, `scripts/`, `assets/`, and optional `dist/` output generated by build tooling; no additional runtime directories are allowed.
+- Environment variables powering NeoDB requests MUST be declared in `.env.example` and injected at build time through lightweight tooling (e.g., esbuild define replaces) without committing live secrets.
+- HTTP requests MUST flow through `scripts/api.js`, which standardizes timeouts, error normalization, and opt-in caching via `localStorage` while honoring user privacy settings.
+- Styling MUST centralize theme tokens in `styles/theme.css` and reuse utility classes for spacing, typography, and color to keep the presentation coherent and maintainable.
+
+## Delivery Workflow
+
+- Feature specifications MUST map each user story to the relevant core principle(s) and document required breakpoints, data interactions, and accessibility checks.
+- Implementation plans MUST pass a Constitution Check verifying static asset compliance, responsive breakpoint coverage, NeoDB integration design, and accessibility/performance validation strategy before coding starts.
+- Pull requests MUST attach evidence: responsive screenshots (<=360 px, 768 px, >=1200 px), latest Lighthouse report, and accessibility scan output (e.g., axe-core or WAVE) captured against the feature branch build.
+- Deployment artifacts MUST be generated via a reproducible `npm run build` (or equivalent) command that outputs only static files and is validated before merge.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes conflicting process documents within the repository; any disagreement is resolved in favor of these principles.
+- Amendments require a documented pull request describing the change, updated versioning per this section, refreshed templates as needed, and approval from the core maintainer group (majority of owners).
+- Versioning follows semantic rules: MAJOR for breaking principle changes, MINOR for new principles or substantive expansions, PATCH for clarifications; each amendment MUST update the Sync Impact Report and related templates.
+- Compliance reviews occur on every pull request; maintainers MUST verify adherence to the core principles, rerun required audits, and reject changes lacking mandated evidence.
+- An annual retrospective each October MUST reaffirm relevance of the principles, capturing decisions in the repository's docs or triggering amendments if adjustments are required.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-10-13 | **Last Amended**: 2025-10-13

@@ -3,7 +3,7 @@
 **Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
+**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/scripts/bash/setup-plan.sh` for the execution workflow.
 
 ## Summary
 
@@ -31,7 +31,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **Framework-Free Static Delivery**: Plan MUST document how vanilla HTML/CSS/JS will be used end-to-end and how the static build (e.g., `npm run build`) outputs deployable files only.
+- **Responsive Layout Fidelity**: Plan MUST list target breakpoints (<=360 px, 768 px, >=1200 px) and the validation approach for each viewport.
+- **NeoDB Data Authority**: Plan MUST outline how the feature retrieves podcast metadata via NeoDB UUIDs, including error handling and configuration of API endpoints or tokens.
+- **Accessible Modern Presentation**: Plan MUST specify accessibility reviews (semantic structure, alt text strategy, focus states) and the tooling used to verify WCAG 2.1 AA compliance.
+- **Performance Budget Discipline**: Plan MUST define how payload size stays under 200 KB gzipped and identify the automation used to capture Lighthouse (or equivalent) scores >=90.
 
 ## Project Structure
 
@@ -56,39 +60,14 @@ specs/[###-feature]/
 -->
 
 ```
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+├── index.html
+├── styles/
+├── scripts/
+├── assets/
+└── data/               # optional: static fixtures or cached payloads
 
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+dist/                   # build output (static files only)
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real

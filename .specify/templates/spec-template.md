@@ -28,6 +28,8 @@
 
 **Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
 
+> Constitution alignment: Document the responsive breakpoints exercised (<=360 px, 768 px, >=1200 px), the NeoDB UUIDs involved, and the accessibility/performance evidence the story will produce.
+
 **Acceptance Scenarios**:
 
 1. **Given** [initial state], **When** [action], **Then** [expected outcome]
@@ -72,8 +74,9 @@
   Fill them out with the right edge cases.
 -->
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- What happens when the NeoDB API request times out, fails authentication, or returns incomplete fields?
+- How does the layout behave on devices narrower than 320 px or wider than 1440 px?
+- What feedback is shown if performance audits fall below the >=90 Lighthouse target?
 
 ## Requirements *(mandatory)*
 
@@ -84,21 +87,21 @@
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-001**: System MUST request podcast metadata from NeoDB using the provided UUID and render the response fields (title, description, official_site).
+- **FR-002**: System MUST render a responsive layout that preserves usability at <=360 px, 768 px, and >=1200 px viewports.
+- **FR-003**: Users MUST be able to browse podcast cards with accessible keyboard navigation and descriptive alt text.
+- **FR-004**: System MUST display resilient loading and error states when NeoDB data is unavailable.
+- **FR-005**: System MUST serve static assets only (HTML, CSS, JS) via the documented build command.
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-006**: System MUST keep the initial payload under 200 KB gzipped [NEEDS CLARIFICATION: identify asset optimization strategy].
+- **FR-007**: System MUST log Lighthouse scores >=90 for Performance and Best Practices [NEEDS CLARIFICATION: specify audit tooling and frequency].
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **Podcast**: Metadata sourced from NeoDB (uuid, title, description, official_site, image_url, tags).
+- **Gallery View**: Presentation layer grouping podcasts by category or personal list ordering.
 
 ## Success Criteria *(mandatory)*
 
@@ -109,7 +112,7 @@
 
 ### Measurable Outcomes
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: [Responsive validation] Gallery maintains layout without overflow at <=360 px, 768 px, >=1200 px.
+- **SC-002**: [Accessibility metric] Axe-core scan reports zero critical violations across key pages.
+- **SC-003**: [Performance metric] Lighthouse Performance and Best Practices scores remain >=90 on the primary view.
+- **SC-004**: [Data freshness] NeoDB fetch succeeds within [target e.g., 800 ms] for 95% of requests during testing.
