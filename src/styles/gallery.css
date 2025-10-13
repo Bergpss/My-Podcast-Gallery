@@ -1,0 +1,9 @@
+#app {
+  display: grid;
+  gap: calc(var(--space-unit) * 2);
+  padding: calc(var(--space-unit) * 4);
+}
+
+#app p {
+  margin: 0;
+}

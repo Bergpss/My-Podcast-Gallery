@@ -1,0 +1,30 @@
+{
+  "name": "my-podcast-gallery",
+  "version": "0.1.0",
+  "description": "Personal podcast gallery built with vanilla HTML, CSS, and JavaScript.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "prepare:images": "node scripts/prepare-images.js",
+    "test:accessibility": "node scripts/tests/run-axe.js",
+    "test:lighthouse": "node scripts/tests/run-lighthouse.js",
+    "test:responsive": "node scripts/tests/capture-responsive.js",
+    "usability": "node scripts/usability.js",
+    "audit:metadata": "node src/scripts/audit-metadata.js",
+    "preview": "npx serve dist"
+  },
+  "keywords": [
+    "podcast",
+    "gallery",
+    "static-site"
+  ],
+  "author": "Kang Berg",
+  "license": "MIT",
+  "devDependencies": {
+    "axe-core": "^4.10.0",
+    "esbuild": "^0.21.5",
+    "lighthouse": "^12.1.0",
+    "puppeteer": "^24.15.0",
+    "sharp": "^0.33.2"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "uuid": "5a2f1f94-7c95-4d21-9b65-d6db7f3e4c8a",
+    "sensitive": false,
+    "notes": "Anchor show for newcomers; refresh description each season."
+  },
+  {
+    "uuid": "0b9c2212-3a4f-4d3d-9c66-2bb194718809",
+    "sensitive": true,
+    "notes": "Cover art occasionally features mature themes—keep blur enabled."
+  },
+  {
+    "uuid": "8f3f704b-3a10-4c18-a892-2d6c9436c4b5",
+    "sensitive": false,
+    "notes": "Great for accessibility tips; monitor for new episodes monthly."
+  },
+  {
+    "uuid": "44e96964-a815-4a15-9ad8-c7836cbf8bd1",
+    "sensitive": false,
+    "notes": "Community favorite; verify official site URL quarterly."
+  }
+]

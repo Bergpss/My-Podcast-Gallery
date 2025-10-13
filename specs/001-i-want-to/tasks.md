@@ -24,10 +24,10 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 [SETUP] Initialize npm workspace with static-site tooling (`package.json`, npm scripts) at repo root; install dev dependencies `esbuild`, `lighthouse`, `axe-core`, `puppeteer`, `sharp`.
-- [ ] T002 [SETUP] Scaffold source directories (`src/index.html`, `src/styles/`, `src/scripts/`, `src/assets/`, `src/data/`) and create placeholder files.
-- [ ] T003 [SETUP] Add `.env.example` documenting `NEODB_API_BASE`, `NEODB_API_TOKEN`, `PODCAST_UUIDS`; update `.gitignore` to exclude `.env`.
-- [ ] T004 [P] [SETUP] Seed `src/data/podcasts.json` with curated UUID examples including optional `"sensitive": true` flag and inline maintenance notes.
+- [X] T001 [SETUP] Initialize npm workspace with static-site tooling (`package.json`, npm scripts) at repo root; install dev dependencies `esbuild`, `lighthouse`, `axe-core`, `puppeteer`, `sharp`.
+- [X] T002 [SETUP] Scaffold source directories (`src/index.html`, `src/styles/`, `src/scripts/`, `src/assets/`, `src/data/`) and create placeholder files.
+- [X] T003 [SETUP] Add `.env.example` documenting `NEODB_API_BASE`, `NEODB_API_TOKEN`, `PODCAST_UUIDS`; update `.gitignore` to exclude `.env`.
+- [X] T004 [P] [SETUP] Seed `src/data/podcasts.json` with curated UUID examples including optional `"sensitive": true` flag and inline maintenance notes.
 
 ---
 

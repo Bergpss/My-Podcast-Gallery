@@ -1,0 +1,15 @@
+:root {
+  color-scheme: light dark;
+  --color-background: #f7f7f9;
+  --color-foreground: #121212;
+  --color-accent: #5d2dff;
+  --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --space-unit: 0.5rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}

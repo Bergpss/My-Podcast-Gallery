@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder Cover</title>
+  <desc id="desc">Simple placeholder graphic for podcast artwork.</desc>
+  <rect width="200" height="200" fill="#dcdcff"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#5d2dff">Podcast</text>
+</svg>
