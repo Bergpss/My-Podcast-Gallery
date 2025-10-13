@@ -138,13 +138,14 @@ export async function fetchPodcast(uuid, options = {}) {
 }
 
 export async function fetchPodcasts(uuids, options = {}) {
-  const results = await Promise.allSettled(
-    uuids.map((uuid) =>
-      fetchPodcast(uuid, options).then(
-        (data) => ({ status: 'fulfilled', uuid, data }),
-        (error) => ({ status: 'rejected', uuid, error })
-      )
-    )
+  return Promise.all(
+    uuids.map(async (uuid) => {
+      try {
+        const data = await fetchPodcast(uuid, options);
+        return { status: 'fulfilled', uuid, data };
+      } catch (error) {
+        return { status: 'rejected', uuid, error };
+      }
+    })
   );
-  return results;
 }
