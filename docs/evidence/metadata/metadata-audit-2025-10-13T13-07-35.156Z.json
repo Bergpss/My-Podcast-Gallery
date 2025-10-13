@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2025-10-13T13:07:35.156Z",
+  "results": [
+    {
+      "uuid": "5a5GVZtOSlyYr2b9onn8pB",
+      "sensitive": false,
+      "fetchedAt": "2025-10-13T13:07:30.860Z",
+      "status": "success",
+      "statusCode": 200,
+      "title": "代码之外 Beyond Code",
+      "updatedAt": null,
+      "deltaDetected": null
+    },
+    {
+      "uuid": "36SgqT3qXu4x1ClGSySWHm",
+      "sensitive": false,
+      "fetchedAt": "2025-10-13T13:07:33.241Z",
+      "status": "success",
+      "statusCode": 200,
+      "title": "史蒂夫说",
+      "updatedAt": null,
+      "deltaDetected": null
+    },
+    {
+      "uuid": "2eBoVUHhSZ0Dyq3H0dKLyy",
+      "sensitive": false,
+      "fetchedAt": "2025-10-13T13:07:33.879Z",
+      "status": "success",
+      "statusCode": 200,
+      "title": "张春酷酷酷",
+      "updatedAt": null,
+      "deltaDetected": null
+    },
+    {
+      "uuid": "1mDinThaJh9WvIER3oGHVl",
+      "sensitive": false,
+      "fetchedAt": "2025-10-13T13:07:34.517Z",
+      "status": "success",
+      "statusCode": 200,
+      "title": "忽软忽硬",
+      "updatedAt": null,
+      "deltaDetected": null
+    }
+  ]
+}

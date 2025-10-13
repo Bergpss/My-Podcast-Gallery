@@ -1,0 +1,5 @@
+
+> my-podcast-gallery@0.1.0 test:accessibility
+> node scripts/tests/run-axe.js
+
+Accessibility audit passed ✓ (no violations found).

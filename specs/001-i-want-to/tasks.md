@@ -37,13 +37,13 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [FOUND] Configure `scripts/build.js` (or equivalent) to bundle `src/` via esbuild into `dist/` with hashed assets and HTML entry point.
-- [ ] T006 [P] [FOUND] Implement image optimization pipeline (`scripts/prepare-images.js`) using Sharp/imagemin; add npm script `prepare:images`.
-- [ ] T007 [P] [FOUND] Wire quality automation scripts: `npm run test:accessibility`, `npm run test:lighthouse`, `npm run test:responsive`, `npm run usability`, `npm run audit:metadata`.
-- [ ] T008 [FOUND] Implement `src/scripts/api.js` with fetch wrapper (timeout, retry-once, error normalization) using env-configured base URL/token.
-- [ ] T009 [FOUND] Establish design tokens in `src/styles/theme.css` (colors, typography scale, spacing, focus styles, warning badge palette).
-- [ ] T010 [FOUND] Update `specs/001-i-want-to/quickstart.md` with setup commands, quality gates, and manual checklist.
-- [ ] T011 [FOUND] Create documentation skeleton (`docs/evidence/US1/`, `docs/evidence/US2/`, `docs/evidence/US3/`, `docs/maintenance/`) including README placeholders.
+- [X] T005 [FOUND] Configure `scripts/build.js` (or equivalent) to bundle `src/` via esbuild into `dist/` with hashed assets and HTML entry point.
+- [X] T006 [P] [FOUND] Implement image optimization pipeline (`scripts/prepare-images.js`) using Sharp/imagemin; add npm script `prepare:images`.
+- [X] T007 [P] [FOUND] Wire quality automation scripts: `npm run test:accessibility`, `npm run test:lighthouse`, `npm run test:responsive`, `npm run usability`, `npm run audit:metadata`.
+- [X] T008 [FOUND] Implement `src/scripts/api.js` with fetch wrapper (timeout, retry-once, error normalization) using env-configured base URL/token.
+- [X] T009 [FOUND] Establish design tokens in `src/styles/theme.css` (colors, typography scale, spacing, focus styles, warning badge palette).
+- [X] T010 [FOUND] Update `specs/001-i-want-to/quickstart.md` with setup commands, quality gates, and manual checklist.
+- [X] T011 [FOUND] Create documentation skeleton (`docs/evidence/US1/`, `docs/evidence/US2/`, `docs/evidence/US3/`, `docs/maintenance/`) including README placeholders.
 
 **Checkpoint**: Foundation ready – user story implementation can begin
 
@@ -57,27 +57,27 @@ description: "Task list for Personal Podcast Gallery implementation"
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T012 [US1] Run `npm run build` BEFORE implementation to confirm static pipeline executes and highlights missing gallery output.
-- [ ] T013 [US1] Execute `npm run test:accessibility` before implementation to capture failing baseline logs.
-- [ ] T014 [US1] Execute `npm run test:lighthouse` (mobile + desktop) before implementation to capture baseline metrics.
+- [X] T012 [US1] Run `npm run build` BEFORE implementation to confirm static pipeline executes and highlights missing gallery output.
+- [X] T013 [US1] Execute `npm run test:accessibility` before implementation to capture failing baseline logs.
+- [X] T014 [US1] Execute `npm run test:lighthouse` (mobile + desktop) before implementation to capture baseline metrics.
 
 ### Implementation for User Story 1
 
-- [ ] T015 [US1] Author semantic layout in `src/index.html` (header, skip link, main gallery region, status area, footer).
-- [ ] T016 [P] [US1] Implement gallery styling in `src/styles/gallery.css` with mobile-first layout and focus-visible treatments.
-- [ ] T017 [P] [US1] Build `src/scripts/gallery.js` to hydrate podcasts from `PODCAST_UUIDS`, request metadata via `api.js`, and render cards.
-- [ ] T018 [P] [US1] Create `src/scripts/ui-state.js` managing `GalleryUIState` transitions (loading, ready, empty, error) and wiring status messages.
-- [ ] T019 [US1] Add accessibility behaviors (alt text, keyboard focus order, external link semantics, reduced-motion respect) across `index.html` and `gallery.js`.
-- [ ] T020 [US1] Implement sensitive cover handling: blur overlay, warning badge CSS, reveal control, using `sensitive` flags and `src/assets/placeholder-cover.svg`.
-- [ ] T021 [US1] Update `docs/maintenance/podcast-refresh.md` with instructions for managing `PODCAST_UUIDS` and `sensitive` flags.
+- [X] T015 [US1] Author semantic layout in `src/index.html` (header, skip link, main gallery region, status area, footer).
+- [X] T016 [P] [US1] Implement gallery styling in `src/styles/gallery.css` with mobile-first layout and focus-visible treatments.
+- [X] T017 [P] [US1] Build `src/scripts/gallery.js` to hydrate podcasts from `PODCAST_UUIDS`, request metadata via `api.js`, and render cards.
+- [X] T018 [P] [US1] Create `src/scripts/ui-state.js` managing `GalleryUIState` transitions (loading, ready, empty, error) and wiring status messages.
+- [X] T019 [US1] Add accessibility behaviors (alt text, keyboard focus order, external link semantics, reduced-motion respect) across `index.html` and `gallery.js`.
+- [X] T020 [US1] Implement sensitive cover handling: blur overlay, warning badge CSS, reveal control, using `sensitive` flags and `src/assets/placeholder-cover.svg`.
+- [X] T021 [US1] Update `docs/maintenance/podcast-refresh.md` with instructions for managing `PODCAST_UUIDS` and `sensitive` flags.
 
 ### Verification for User Story 1
 
-- [ ] T022 [US1] Re-run `npm run build` verifying gallery renders with populated data and sensitive overlays.
-- [ ] T023 [US1] Re-run `npm run test:accessibility` ensuring zero critical issues; archive report in `docs/evidence/US1/`.
-- [ ] T024 [US1] Re-run `npm run test:lighthouse` confirming scores >=90 (Performance/Best Practices); store reports in `docs/evidence/US1/`.
-- [ ] T025 [US1] Execute `npm run usability` with three participants capturing 5-second recognition results (raw notes in `docs/evidence/US1/`).
-- [ ] T026 [US1] Summarize usability findings and acceptance evidence in `docs/evidence/US1/usability.md`.
+- [X] T022 [US1] Re-run `npm run build` verifying gallery renders with populated data and sensitive overlays.
+- [X] T023 [US1] Re-run `npm run test:accessibility` ensuring zero critical issues; archive report in `docs/evidence/US1/`.
+- [X] T024 [US1] Re-run `npm run test:lighthouse` confirming scores >=90 (Performance/Best Practices); store reports in `docs/evidence/US1/`.
+- [X] T025 [US1] Execute `npm run usability` with three participants capturing 5-second recognition results (raw notes in `docs/evidence/US1/`).
+- [X] T026 [US1] Summarize usability findings and acceptance evidence in `docs/evidence/US1/usability.md`.
 
 **Checkpoint**: User Story 1 functional, accessible, and evidenced independently
 

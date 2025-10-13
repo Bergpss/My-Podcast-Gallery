@@ -16,28 +16,31 @@ npm install
 2. Populate the following variables:
    - `NEODB_API_BASE=https://neodb.social/api`
    - `NEODB_API_TOKEN=` (leave blank if not required)
-   - `PODCAST_UUIDS=` comma-separated list of podcast UUIDs to feature (each entry may optionally include `"sensitive": true` in `src/data/podcasts.json` to blur cover art).
+   - `PODCAST_UUIDS=` comma-separated list of podcast UUIDs to feature. Maintain the canonical list (with optional `"sensitive": true` flags and curator notes) in `src/data/podcasts.json`.
 
 ## 3. Prepare Assets
-```bash
-npm run prepare:images   # Converts cover art to WebP/AVIF and generates srcset variants
-```
-(Ensure output files remain under the 200 KB gzipped budget; the script will warn on overages.)
+1. Place full-resolution cover art assets in `src/assets/raw/` (JPEG or PNG).
+2. Run the optimizer:
+   ```bash
+   npm run prepare:images   # Sharp + imagemin create multi-size WebP/AVIF variants
+   ```
+3. Optimized outputs are written to `src/assets/optimized/` with a generated `manifest.json` describing each variant. Replace gallery references with the optimized filenames to respect performance budgets (<200 KB gzipped per page).
 
 ## 4. Build the Static Site
 ```bash
 npm run build            # Produces dist/ with hashed assets via esbuild
 ```
+The build script injects the environment variables defined in `.env` so the bundled client can read `NEODB_API_BASE`, `NEODB_API_TOKEN`, and `PODCAST_UUIDS` at runtime.
 
 ## 5. Run Quality Gates
 ```bash
-npm run test:accessibility   # axe-core audit against dist/index.html
-npm run test:lighthouse      # Lighthouse CI (mobile + desktop)
-npm run test:responsive      # Captures viewport screenshots for 300px, <=360px, 768px, >=1200px, >=1800px
-npm run usability            # Guides moderated 5-second recognition session (three participants)
-npm run audit:metadata       # Executes scripts/audit-metadata.js for nightly freshness log
+npm run test:accessibility   # Runs axe-core in jsdom against dist/index.html
+npm run test:lighthouse      # Launches Chrome headless, audits mobile + desktop, stores JSON in docs/evidence/lighthouse/
+npm run test:responsive      # Captures 300/360/768/1200/1800 px screenshots via Puppeteer
+npm run usability            # Generates a timestamped moderated-session template under docs/evidence/usability/
+npm run audit:metadata       # Fetches each NeoDB UUID, logs results to docs/evidence/metadata/
 ```
-All commands must pass before submitting a pull request.
+All commands must pass before submitting a pull request. Set `CHROME_PATH` or `PUPPETEER_EXECUTABLE_PATH` if Chrome/Chromium is installed in a non-standard location.
 
 ## 6. Preview Locally
 ```bash
@@ -53,8 +56,8 @@ Manual validation checklist:
 Deploy the contents of `dist/` to any static hosting provider (e.g., Netlify, GitHub Pages, Vercel static export). No server configuration is required.
 
 ## Evidence Collection for PRs
-- Attach latest axe-core and Lighthouse reports (JSON or HTML)
-- Provide responsive screenshots for mobile (<=360 px), tablet (768 px), and desktop (>=1200 px)
-- Provide extreme viewport evidence (300 px & 1800 px captures)
-- Include timestamped note confirming NeoDB data refreshed successfully within last 24 hours
-- Attach usability session summary and metadata audit log excerpt covering the latest run
+- Attach the latest axe-core summary (console output) and Lighthouse reports from `docs/evidence/lighthouse/`
+- Include responsive screenshots saved in `docs/evidence/responsive/` (300, 360, 768, 1200, 1800 widths)
+- Add moderated usability notes generated under `docs/evidence/usability/`
+- Commit the latest metadata audit log from `docs/evidence/metadata/`
+- Reference any unusual findings or follow-up actions in the pull request description

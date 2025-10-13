@@ -8,12 +8,51 @@
     <link rel="stylesheet" href="./styles/gallery.css" />
   </head>
   <body>
-    <header>
-      <h1>Personal Podcast Gallery</h1>
+    <a class="skip-link" href="#gallery">Skip to podcast gallery</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h1 class="site-title">Personal Podcast Gallery</h1>
+        <p class="site-tagline">Curated highlights from NeoDB, refreshed nightly with sensitive covers protected by default.</p>
+      </div>
     </header>
-    <main id="app" aria-live="polite">
-      <p>Placeholder gallery content.</p>
+    <main id="main-content" class="layout">
+      <section id="status-region" class="status" role="status" aria-live="polite" aria-atomic="true">
+        <p class="status__message" data-status-message>Loading podcasts…</p>
+      </section>
+      <section class="gallery-region" aria-label="Curated podcast gallery">
+        <ul id="gallery" class="podcast-gallery" tabindex="-1">
+          <!-- Cards rendered via gallery.js -->
+        </ul>
+      </section>
     </main>
+    <footer class="site-footer">
+      <small>&copy; <span data-current-year></span> Personal Podcast Gallery · Powered by NeoDB</small>
+    </footer>
+
+    <template id="podcast-card-template">
+      <li class="podcast-card" data-sensitive="false">
+        <div class="podcast-card__media">
+          <img class="podcast-card__image" alt="" loading="lazy" />
+          <div class="podcast-card__sensitive" role="status" aria-live="polite">
+            <span aria-hidden="true">Sensitive cover</span>
+            <span class="sr-only">Sensitive cover hidden</span>
+          </div>
+          <button type="button" class="podcast-card__reveal" data-reveal-button>
+            Reveal cover
+          </button>
+        </div>
+        <div class="podcast-card__body">
+          <h2 class="podcast-card__title"></h2>
+          <p class="podcast-card__description"></p>
+          <div class="podcast-card__meta">
+            <a class="podcast-card__link" target="_blank" rel="noopener noreferrer" data-link>
+              Visit official site
+            </a>
+          </div>
+        </div>
+      </li>
+    </template>
+
     <script type="module" src="./scripts/gallery.js"></script>
   </body>
 </html>
