@@ -85,9 +85,15 @@ As the gallery curator, I want the site to pull live data from NeoDB so the cove
 
 ### Key Entities *(include if feature involves data)*
 
-- **Podcast**: Metadata sourced from NeoDB (uuid, title, description, official_site, image_url, tags).
+- **Podcast**: Metadata sourced from NeoDB (uuid, title, description, official_site, image_url, tags) with curator-managed metadata in `src/data/podcasts.json` including a `sensitive` boolean used to trigger blur overlays.
 - **Podcast Collection**: Curated list owned by the site creator, defining which podcast UUIDs appear and in what order visitors see them.
 - **Status Message**: Structured content used to inform visitors about loading, empty-state, or error conditions without disrupting the gallery layout.
+
+## Clarifications
+
+### Session 2025-10-13
+
+- Q: How will the curator flag sensitive podcast cover art that should receive the blur overlay? → A: Add a `sensitive` boolean per podcast entry in `src/data/podcasts.json`.
 
 ## Success Criteria *(mandatory)*
 
