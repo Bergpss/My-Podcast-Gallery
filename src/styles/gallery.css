@@ -207,10 +207,41 @@
   margin: 0;
   color: var(--color-text-secondary);
   font-size: var(--font-size-200);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.podcast-card__description-text {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  max-height: calc(var(--line-height-default) * 3);
+  transition: max-height var(--transition-default);
+}
+
+.podcast-card__description[data-expanded="true"] .podcast-card__description-text {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  max-height: none;
+}
+
+.podcast-card__description-toggle {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-accent);
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.podcast-card__description-toggle:hover,
+.podcast-card__description-toggle:focus-visible {
+  text-decoration: underline;
 }
 
 .podcast-card__meta {

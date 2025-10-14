@@ -42,15 +42,23 @@ function deriveCurationOrder(curatedData) {
   return curatedData;
 }
 
-function truncateDescription(description, limit = 200) {
+function truncateDescription(description, limit = 120) {
+  const fallback = 'No description provided.';
   if (!description) {
-    return 'No description provided.';
+    return { displayText: fallback, fullText: fallback, isTruncated: false };
   }
-  const normalized = description.replace(/<[^>]*>/g, '').trim();
+
+  const normalized = String(description).replace(/<[^>]*>/g, '').trim();
+  if (!normalized) {
+    return { displayText: fallback, fullText: fallback, isTruncated: false };
+  }
+
   if (normalized.length <= limit) {
-    return normalized;
+    return { displayText: normalized, fullText: normalized, isTruncated: false };
   }
-  return `${normalized.slice(0, limit).trim()}…`;
+
+  const displayText = `${normalized.slice(0, limit).trim()}…`;
+  return { displayText, fullText: normalized, isTruncated: true };
 }
 
 function createCardElement(template, podcast, metadata) {
@@ -70,7 +78,41 @@ function createCardElement(template, podcast, metadata) {
   title.textContent = metadata.title ?? 'Untitled podcast';
 
   const description = fragment.querySelector('.podcast-card__description');
-  description.textContent = truncateDescription(metadata.description);
+  const descriptionContent = truncateDescription(metadata.description);
+
+  const descriptionText = document.createElement('span');
+  descriptionText.className = 'podcast-card__description-text';
+  description.replaceChildren(descriptionText);
+
+  if (descriptionContent.isTruncated) {
+    const descriptionId = `description-${podcast.uuid}`;
+    description.dataset.expanded = 'false';
+    descriptionText.id = descriptionId;
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'podcast-card__description-toggle';
+    toggle.setAttribute('aria-controls', descriptionId);
+
+    const setExpandedState = (expanded) => {
+      description.dataset.expanded = expanded ? 'true' : 'false';
+      descriptionText.textContent = expanded ? descriptionContent.fullText : descriptionContent.displayText;
+      toggle.textContent = expanded ? '收起' : '展开';
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    };
+
+    toggle.addEventListener('click', () => {
+      const isExpanded = description.dataset.expanded === 'true';
+      setExpandedState(!isExpanded);
+    });
+
+    setExpandedState(false);
+
+    description.appendChild(toggle);
+  } else {
+    descriptionText.textContent = descriptionContent.fullText;
+    description.removeAttribute('data-expanded');
+  }
 
   const link = fragment.querySelector('[data-link]');
   const meta = fragment.querySelector('.podcast-card__meta');
