@@ -8,11 +8,6 @@ import {
   StatusType
 } from './ui-state.js';
 
-const PODCAST_ENV = (process.env.PODCAST_UUIDS ?? '')
-  .split(',')
-  .map((value) => value.trim())
-  .filter(Boolean);
-
 const PLACEHOLDER_IMAGE = './assets/media/placeholder-cover.svg';
 
 async function loadCuratedList() {
@@ -33,12 +28,6 @@ async function loadCuratedList() {
 }
 
 function deriveCurationOrder(curatedData) {
-  if (PODCAST_ENV.length > 0) {
-    return PODCAST_ENV.map((uuid) => {
-      const match = curatedData.find((item) => item.uuid === uuid);
-      return match ? match : { uuid, sensitive: false };
-    });
-  }
   return curatedData;
 }
 

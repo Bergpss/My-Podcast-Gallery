@@ -21,8 +21,7 @@ dotenv.config({ path: path.join(ROOT_DIR, '.env') });
 
 const ENV_VARS = {
   NEODB_API_BASE: process.env.NEODB_API_BASE ?? '',
-  NEODB_API_TOKEN: process.env.NEODB_API_TOKEN ?? '',
-  PODCAST_UUIDS: process.env.PODCAST_UUIDS ?? ''
+  NEODB_API_TOKEN: process.env.NEODB_API_TOKEN ?? ''
 };
 
 async function emptyDist() {
@@ -116,8 +115,7 @@ async function runBuild() {
     assetNames: 'static/[name]-[hash]',
     define: {
       'process.env.NEODB_API_BASE': JSON.stringify(ENV_VARS.NEODB_API_BASE),
-      'process.env.NEODB_API_TOKEN': JSON.stringify(ENV_VARS.NEODB_API_TOKEN),
-      'process.env.PODCAST_UUIDS': JSON.stringify(ENV_VARS.PODCAST_UUIDS)
+      'process.env.NEODB_API_TOKEN': JSON.stringify(ENV_VARS.NEODB_API_TOKEN)
     },
     loader: {
       '.svg': 'file',

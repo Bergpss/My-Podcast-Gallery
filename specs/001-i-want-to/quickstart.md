@@ -16,7 +16,6 @@ npm install
 2. Populate the following variables:
    - `NEODB_API_BASE=https://neodb.social/api`
    - `NEODB_API_TOKEN=` (leave blank if not required)
-   - `PODCAST_UUIDS=` comma-separated list of podcast UUIDs to feature. Maintain the canonical list (with optional `"sensitive": true` flags and curator notes) in `src/data/podcasts.json`.
 
 ## 3. Prepare Assets
 1. Place full-resolution cover art assets in `src/assets/raw/` (JPEG or PNG).
@@ -30,7 +29,7 @@ npm install
 ```bash
 npm run build            # Produces dist/ with hashed assets via esbuild
 ```
-The build script injects the environment variables defined in `.env` so the bundled client can read `NEODB_API_BASE`, `NEODB_API_TOKEN`, and `PODCAST_UUIDS` at runtime.
+The build script injects the environment variables defined in `.env` so the bundled client can read `NEODB_API_BASE` and `NEODB_API_TOKEN` at runtime.
 
 ## 5. Run Quality Gates
 ```bash
