@@ -244,6 +244,29 @@
   text-decoration: underline;
 }
 
+.podcast-card__notes {
+  align-self: stretch;
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-muted);
+  border-left: 3px solid var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+.podcast-card__notes-heading {
+  margin: 0;
+  font-size: var(--font-size-200);
+  font-weight: 600;
+}
+
+.podcast-card__notes-text {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-200);
+  color: var(--color-text-secondary);
+  white-space: pre-line;
+}
+
 .podcast-card__meta {
   display: flex;
   align-items: center;

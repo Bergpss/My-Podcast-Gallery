@@ -114,6 +114,24 @@ function createCardElement(template, podcast, metadata) {
     description.removeAttribute('data-expanded');
   }
 
+  const notesContainer = fragment.querySelector('.podcast-card__notes');
+  const notesText = notesContainer?.querySelector('.podcast-card__notes-text');
+  const rawNotes = typeof podcast.notes === 'string' ? podcast.notes.trim() : '';
+
+  if (notesContainer && notesText) {
+    if (rawNotes) {
+      const sanitizedNotes = rawNotes.replace(/<[^>]*>/g, '').trim();
+      if (sanitizedNotes) {
+        notesText.textContent = sanitizedNotes;
+        notesContainer.hidden = false;
+      } else {
+        notesContainer.remove();
+      }
+    } else {
+      notesContainer.remove();
+    }
+  }
+
   const link = fragment.querySelector('[data-link]');
   const meta = fragment.querySelector('.podcast-card__meta');
 
