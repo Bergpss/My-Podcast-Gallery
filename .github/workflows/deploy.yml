@@ -18,6 +18,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
+    env:
+      NEODB_API_BASE: ${{ secrets.NEODB_API_BASE }}
+      NEODB_API_TOKEN: ${{ secrets.NEODB_API_TOKEN }}
+      PODCAST_UUIDS: ${{ secrets.PODCAST_UUIDS }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
